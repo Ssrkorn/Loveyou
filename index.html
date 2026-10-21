@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ขอโทษนะเบบี๋ 💌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ece8ff;--card:#ffffff;--ink:#2d2350;--muted:#6f6591;--accent:#ff5c8a;--accent-ink:#ffffff;--soft:#f3efff;--line:#d9d0ff;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#17132b;--card:#241d42;--ink:#f4efff;--muted:#b3a8d6;--accent:#ff7aa2;--accent-ink:#2a0f1c;--soft:#2f2752;--line:#4a3f7a}
+}
+:root[data-theme="dark"]{--bg:#17132b;--card:#241d42;--ink:#f4efff;--muted:#b3a8d6;--accent:#ff7aa2;--accent-ink:#2a0f1c;--soft:#2f2752;--line:#4a3f7a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:"Mali","Sarabun","Noto Sans Thai",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px 16px;line-height:1.7}
+.card{width:100%;max-width:440px;background:var(--card);border-radius:28px;padding:34px 26px 30px;text-align:center;box-shadow:0 18px 50px rgba(60,40,120,.18)}
+.hide{display:none!important}
+.emoji{font-size:64px;line-height:1;display:block;margin-bottom:12px;transition:transform .3s ease}
+.emoji.bump{transform:scale(1.25)}
+h1{font-size:1.9rem;margin:0 0 18px;font-weight:700;line-height:1.3}
+button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:12px 26px;font-weight:600;color:inherit}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* ซอง */
+#env{background:none;padding:10px;display:block;margin:0 auto}
+#env .big{font-size:110px;line-height:1;display:block;animation:wiggle 1.6s ease-in-out 3}
+#env span.t{display:block;margin-top:10px;font-size:1.1rem;font-weight:700}
+#env span.s{display:block;color:var(--muted);font-size:.9rem;font-weight:400}
+@keyframes wiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-8deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-5deg)}80%{transform:rotate(5deg)}}
+/* จดหมาย */
+.lines p{margin:0 0 10px;font-size:1.03rem;opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .7s ease}
+.lines p.show{opacity:1;transform:none}
+.lines p.last{font-weight:600;margin-top:16px}
+.ask{margin-top:24px;opacity:0;pointer-events:none;transition:opacity .6s ease}
+.ask.show{opacity:1;pointer-events:auto}
+.ask h2{font-size:1.15rem;margin:0 0 4px}
+.plea{min-height:1.7em;margin:0 0 14px;color:var(--muted);font-size:.95rem}
+.btns{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap;min-height:70px}
+#yes{background:var(--accent);color:var(--accent-ink);font-size:1.05rem;transition:transform .25s ease}
+#no{background:var(--soft);transition:left .25s ease,top .25s ease}
+#no.run{position:fixed;z-index:5}
+/* หลังให้อภัย */
+.result ul{list-style:none;padding:0;margin:14px 0 0;text-align:left;display:inline-block}
+.result li{margin:0 0 6px;padding-left:1.9em;position:relative}
+.result li::before{content:"💗";position:absolute;left:0}
+.pick{margin:22px 0 10px;font-weight:700}
+.coupons{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.coupon{background:var(--soft);border:2px dashed var(--line);border-radius:18px;padding:14px 6px;display:flex;flex-direction:column;gap:6px;font-size:.85rem;line-height:1.35;transition:opacity .3s,border-color .3s}
+.coupon b{font-size:2rem;line-height:1}
+.coupon.sel{border:2px solid var(--accent);background:var(--card)}
+.coupon.dim{opacity:.35}
+.got{margin:14px 0 0;color:var(--muted);font-size:.95rem;min-height:3em}
+#share{margin-top:10px;background:var(--accent);color:var(--accent-ink)}
+.heart{position:fixed;top:-40px;z-index:10;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(40deg);opacity:.2}}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+.pop{animation:pop .5s ease}
+/* แผงเจ้าของ */
+#owner{width:100%;max-width:440px;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 18px;font-size:.88rem}
+#owner b{display:block;margin-bottom:6px}
+#owner ul{margin:0;padding-left:1.2em;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){
+  #env .big{animation:none}.lines p,.ask,#yes,#no,.emoji{transition:none}.pop{animation:none}.heart{display:none}
+}
+</style>
+</head>
+<body>
+
+<aside id="owner" class="hide"><b>🔔 สถานะ (เห็นเฉพาะเจ้าของ)</b><ul id="log"></ul></aside>
+
+<main class="card" id="card">
+  <button id="env" type="button">
+    <span class="big" aria-hidden="true">💌</span>
+    <span class="t">เค้ามีอะไรจะบอกเบบี๋</span>
+    <span class="s">แตะเพื่อเปิดจดหมาย</span>
+  </button>
+
+  <section id="letter" class="hide">
+    <span class="emoji" id="face" aria-hidden="true">🥺</span>
+    <h1 id="title"></h1>
+    <div class="lines" id="lines"></div>
+    <div class="ask" id="ask">
+      <h2>ให้อภัยเค้าได้ไหมเบบี๋</h2>
+      <p class="plea" id="plea" aria-live="polite"></p>
+      <div class="btns">
+        <button id="yes" type="button">หายงอนแล้ว 💕</button>
+        <button id="no" type="button">ยังงอนอยู่</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="result" class="result hide">
+    <span class="emoji" aria-hidden="true">🥰</span>
+    <h1>ขอบคุณนะเบบี๋ 🥹</h1>
+    <p style="margin:0">เค้าสัญญาว่าจะ</p>
+    <ul id="promises"></ul>
+    <p class="pick">เลือกคูปองง้อมา 1 ใบเลยเบบี๋</p>
+    <div class="coupons" id="coupons"></div>
+    <p class="got" id="got" aria-live="polite"></p>
+    <button id="share" type="button" class="hide">บอกเค้าหน่อยสิ 💌</button>
+  </section>
+</main>
+
+<script>
+// ===== แก้ข้อความตรงนี้ได้เลย =====
+const LINES = [
+  "เค้ารู้แล้วว่าเค้าทำให้เบบี๋เสียใจ",
+  "เค้านั่งคิดทั้งวันเลยว่าทำไมเค้าถึงไม่ฟังเบบี๋ให้ดีกว่านี้",
+  "เค้าไม่ได้อยากแก้ตัวนะ แค่อยากบอกว่าเค้าขอโทษจริง ๆ",
+  "เบบี๋สำคัญกับเค้ามากกว่าที่เค้าเคยทำให้เห็น 🥺"
+];
+const PLEAS = [
+  "คิดดูอีกทีนะเบบี๋ 🥺",
+  "เค้าสัญญาจริง ๆ นะ",
+  "ขอโอกาสเค้าอีกครั้งน้า",
+  "เค้าเลี้ยงชานมไข่มุกด้วยเอาไหม 🧋",
+  "ปุ่มนั้นกดไม่ได้หรอกเบบี๋ 😆",
+  "ใจดีกับเค้าหน่อยน้า"
+];
+const PROMISES = [
+  "ฟังเบบี๋ให้มากขึ้น",
+  "บอกความรู้สึกตรง ๆ ไม่เงียบหนี",
+  "ไม่ปล่อยให้เบบี๋งอนนานอีก"
+];
+const COUPONS = [
+  ["🧋", "ชานมไข่มุก 1 แก้ว", "เค้าไปซื้อมาส่งถึงที่เลย 🧋"],
+  ["🫂", "กอดแน่น ๆ 1 ที", "เจอกันเมื่อไหร่เค้ากอดให้ไม่ปล่อยเลย 🫂"],
+  ["🍜", "มื้ออร่อยร้านที่เบบี๋เลือก", "เลือกร้านได้เลย เค้าเลี้ยงเอง 🍜"]
+];
+const SHARE_TEXT = "หายงอนแล้วนะ 💕 เค้าได้คูปองด้วย";
+// ==================================
+
+const $ = id => document.getElementById(id);
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+$("title").textContent = "ขอโทษนะเบบี๋";
+$("promises").innerHTML = PROMISES.map(t => "<li>" + t + "</li>").join("");
+
+/* ---------- ติดตามสถานะ (ทำงานเมื่อ db ใช้ได้) ---------- */
+const sid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const state = { first: Date.now(), env: false, yes: false, dodges: 0, coupon: "" };
+let db = null, isOwner = false;
+function track(patch) {
+  Object.assign(state, patch);
+  if (!db || isOwner) return;
+  db.collection("visits").doc(sid).set(Object.assign({ t: Date.now() }, state)).catch(() => {});
+}
+function fmt(ts) {
+  try { return new Date(ts).toLocaleString("th-TH", { dateStyle: "short", timeStyle: "short" }); } catch (e) { return ""; }
+}
+(async () => {
+  try {
+    const user = window.claude && await claude.use("user");
+    isOwner = user ? await user.isOwner() : false;
+    db = window.claude ? await claude.use("db") : null;
+    if (!db) return;
+    if (isOwner) {
+      $("owner").classList.remove("hide");
+      db.collection("visits").orderBy("t", "desc").limit(8).onSnapshot(snap => {
+        const log = $("log");
+        log.textContent = "";
+        if (snap.empty) { const li = document.createElement("li"); li.textContent = "ยังไม่มีใครเปิดเลย"; log.appendChild(li); return; }
+        snap.docs.forEach(d => {
+          const v = d.data(), li = document.createElement("li");
+          const s = v.yes ? "กดหายงอนแล้ว 💕" : v.env ? "เปิดจดหมายแล้ว" : "เปิดหน้าเว็บแล้ว";
+          li.textContent = fmt(v.t) + " · " + s + (v.dodges ? " · พยายามกด “ยังงอน” " + v.dodges + " ครั้ง" : "") + (v.coupon ? " · เลือก " + v.coupon : "");
+          log.appendChild(li);
+        });
+      }, () => {});
+    } else {
+      track({});
+    }
+  } catch (e) {}
+})();
+
+/* ---------- ซอง → จดหมาย ---------- */
+$("env").addEventListener("click", () => {
+  $("env").classList.add("hide");
+  const l = $("letter"); l.classList.remove("hide"); l.classList.add("pop");
+  track({ env: true });
+  const box = $("lines");
+  LINES.forEach((t, i) => {
+    const p = document.createElement("p");
+    p.textContent = t;
+    if (i === LINES.length - 1) p.className = "last";
+    box.appendChild(p);
+    setTimeout(() => p.classList.add("show"), 500 + i * 1300);
+  });
+  setTimeout(() => $("ask").classList.add("show"), 500 + LINES.length * 1300);
+});
+
+/* ---------- ปุ่มวิ่งหนี ---------- */
+let tries = 0;
+const yes = $("yes"), no = $("no"), face = $("face");
+function dodge(e) {
+  if (e) e.preventDefault();
+  tries++;
+  $("plea").textContent = PLEAS[(tries - 1) % PLEAS.length];
+  yes.style.transform = "scale(" + Math.min(1 + tries * 0.1, 1.7) + ")";
+  face.textContent = tries >= 5 ? "🥹" : "😢";
+  face.classList.add("bump"); setTimeout(() => face.classList.remove("bump"), 300);
+  state.dodges = tries;
+  if (tries >= 8) { no.classList.add("hide"); $("plea").textContent = "เหลือปุ่มเดียวแล้วนะเบบี๋ 😌"; return; }
+  no.classList.add("run");
+  const m = 16, w = no.offsetWidth, h = no.offsetHeight;
+  no.style.left = m + Math.random() * Math.max(0, innerWidth - w - 2 * m) + "px";
+  no.style.top = m + Math.random() * Math.max(0, innerHeight - h - 2 * m) + "px";
+}
+no.addEventListener("pointerenter", dodge);
+no.addEventListener("click", dodge);
+
+/* ---------- หัวใจร่วง ---------- */
+function hearts(n) {
+  const set = ["💗", "💕", "💖", "🌸", "💞", "🧸"];
+  for (let i = 0; i < n; i++) setTimeout(() => {
+    const h = document.createElement("span");
+    h.className = "heart";
+    h.textContent = set[Math.floor(Math.random() * set.length)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.fontSize = 18 + Math.random() * 22 + "px";
+    h.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6500);
+  }, i * 110);
+}
+
+/* ---------- ให้อภัย + คูปอง ---------- */
+const cbox = $("coupons");
+COUPONS.forEach((c, i) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "coupon";
+  b.innerHTML = "<b>" + c[0] + "</b><span>" + c[1] + "</span>";
+  b.addEventListener("click", () => {
+    [...cbox.children].forEach((x, j) => { x.classList.toggle("sel", j === i); x.classList.toggle("dim", j !== i); });
+    $("got").textContent = c[2];
+    track({ coupon: c[1] });
+    hearts(14);
+    if (navigator.share) $("share").classList.remove("hide");
+  });
+  cbox.appendChild(b);
+});
+
+yes.addEventListener("click", () => {
+  $("letter").classList.add("hide");
+  no.classList.add("hide");
+  const r = $("result"); r.classList.remove("hide"); r.classList.add("pop");
+  track({ yes: true });
+  hearts(45);
+});
+
+$("share").addEventListener("click", () => {
+  try { navigator.share({ text: SHARE_TEXT }).catch(() => {}); } catch (e) {}
+});
+</script>
+</body>
+</html>
